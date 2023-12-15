@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "lib": ["dom", "es2015"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "baseUrl": "./",
+        "types": ["cypress", "node"],
+        "jsx": "react",
+        "sourceMap": true,
+        "outDir": "./dist",
+        "resolveJsonModule": true
+    },
+    "include": ["**/*.ts"],
+
+    "exclude": ["node_modules", "**/*.spec.ts"]
+}

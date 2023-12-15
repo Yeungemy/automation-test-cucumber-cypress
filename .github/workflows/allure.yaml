@@ -1,0 +1,49 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Check Cypress cache
+        run: |
+          npx cypress cache path
+          npx cypress cache list
+
+      - name: Cache Cypress Binary
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/Cypress
+          key: |
+            cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
+
+      - name: Install Cypress
+        run: npx cypress install
+
+      - name: Run Cypress E2E
+        run: npm run e2e:run
+        env:
+          CYPRESS_SPLIT_SPEC_API_KEY: ${{ secrets.SPLIT_SPEC_API_KEY }}
+
+      - name: Run Cypress Cucumber
+        run: npm run cu:run
+
+      - name: Generate Allure Report
+        run: npm run posttest
+
+      - name: Deploy report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: allure
+          publish_dir: allure-history
