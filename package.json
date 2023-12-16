@@ -25,5 +25,8 @@
     },
     "cypress-cucumber-preprocessor": {
         "nonGlobalStepDefinitions": true
-    }
+    }, 
+    "engines": {
+        "node": "14"
+      }
 }
