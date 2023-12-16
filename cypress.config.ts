@@ -1,11 +1,9 @@
-const { defineConfig } = require('cypress');
-const allureWriter = require('@shelex/cypress-allure-plugin/writer');
-const webpack = require('@cypress/webpack-preprocessor');
-const {
-    addCucumberPreprocessorPlugin
-} = require('@badeball/cypress-cucumber-preprocessor');
+import { defineConfig } from 'cypress';
+import allureWriter from '@shelex/cypress-allure-plugin/writer';
+import webpack from '@cypress/webpack-preprocessor';
+import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-preprocessor';
 
-module.exports = defineConfig({
+export default defineConfig({
     env: {
         url: 'https://testpages.eviltester.com/styled/index.html',
         userName: 'test@demoqa.com',
