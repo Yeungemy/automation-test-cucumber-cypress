@@ -19,7 +19,7 @@ const cypressCucumberConfig = {
     ...{
         config: {
             specPattern: 'cypress/e2e/cucumber/*.feature',
-            excludeSpecPattern: '**/*.cy.js'
+            excludeSpecPattern: '**/*.spec.ts'
         }
     }
 };
