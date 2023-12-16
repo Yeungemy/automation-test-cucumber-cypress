@@ -1,32 +1,30 @@
 {
-    "name": "cypress-allure-plugin-example",
+    "name": "cypress-automation-test",
     "version": "1.0.0",
     "main": "index.js",
-    "license": "Apache-2.0",
     "scripts": {
+        "pretest": "(if exist allure-results rmdir /s /q allure-results) && (if exist allure-report rmdir /s /q allure-report) && (if exist cypress\\videos rmdir /s /q cypress\\videos) && (if exist cypress\\screenshots rmdir /s /q cypress\\screenshots) && (mkdir allure-results)",
         "test": "node cypress/support/runner.js",
-        "e2e:open": "npx cypress open --env allure=true --config specPattern=cypress/e2e/test/**/**/*.spec.ts --browser chrome",
-        "cu:open": "npx cypress open --env allure=true --config specPattern=cypress/cucumber/*.feature,excludeSpecPattern=**/*.spec.ts --browser chrome",
-        "e2e:run": "npm run allure:run && set DEBUG=allure-plugin* && npx cypress run --config specPattern=cypress/e2e/test/**/**/*.spec.ts --env allure=true --browser chrome",
-        "cu:run": "set DEBUG=allure-plugin* && npx cypress run --config specPattern=cypress/cucumber/*.feature,excludeSpecPattern=**/*.spec.ts --env allure=true --browser chrome",
-        "allure:run": "(if exist allure-results rmdir /s /q allure-results) && (if exist allure-report rmdir /s /q allure-report) && (if exist cypress\\videos rmdir /s /q cypress\\videos) && (if exist cypress\\screenshots rmdir /s /q cypress\\screenshots) && (mkdir allure-results)",
+        "cy:open": "npx cypress open --env allure=true --config specPattern=cypress/e2e/examples/** --browser chrome",
+        "cy:cucumber:open": "npx cypress open --env allure=true --config specPattern=cypress/e2e/cucumber/*.feature,excludeSpecPattern=*.js --browser chrome",
+        "cy:run": "DEBUG=allure-plugin* npx cypress run --config specPattern=cypress/e2e/examples/* --env allure=true --browser chrome",
+        "cy:cucumber:run": "DEBUG=allure-plugin* npx cypress run --config specPattern=cypress/e2e/cucumber/*.feature,excludeSpecPattern=*.js --env allure=true --browser chrome",
+        "allure:report": "allure generate allure-results --clean -o allure-report",
+        "allure:clear": "rm -r allure-results/ allure-report cypress/screenshots || true",
+        "allure:history": "mv -f allure-report/history allure-results/history && rm -r allure-report || true",
         "posttest": "allure generate allure-results -c -o allure-report && allure open allure-report"
     },
     "devDependencies": {
         "@badeball/cypress-cucumber-preprocessor": "^19.2.0",
         "@cypress/webpack-preprocessor": "^6.0.0",
         "@shelex/cypress-allure-plugin": "^2.40.1",
+        "_comment": "the version has been: cypress-12.14.0, otherwise cannot generate an allure report",
         "cypress": "12.14.0",
         "cypress-plugin-api": "^2.11.1",
-        "cypress-sql-server": "^1.0.0",
         "eslint-plugin-chai-friendly": "^0.7.2",
-        "eslint-plugin-cypress": "^2.15.1",
-        "typescript": "^5.3.3"
+        "eslint-plugin-cypress": "^2.15.1"
     },
     "cypress-cucumber-preprocessor": {
         "nonGlobalStepDefinitions": true
-    }, 
-    "engines": {
-        "node": "14"
-      }
+    }
 }

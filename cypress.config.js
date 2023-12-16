@@ -1,15 +1,14 @@
-import { defineConfig } from 'cypress';
-import allureWriter from '@shelex/cypress-allure-plugin/writer';
-import webpack from '@cypress/webpack-preprocessor';
-import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-preprocessor';
+const { defineConfig } = require('cypress');
+const allureWriter = require('@shelex/cypress-allure-plugin/writer');
+const webpack = require('@cypress/webpack-preprocessor');
+const {
+    addCucumberPreprocessorPlugin
+} = require('@badeball/cypress-cucumber-preprocessor');
 
 module.exports = defineConfig({
-    screenshotOnRunFailure: true,
-    videoCompression: false,
-
     env: {
-        // issuePrefix: 'https://your.domain.atlassian.net/browse/',
-        // tmsPrefix: 'https://some.testrail.instance/path/suite/caseID-'
+        issuePrefix: 'https://your.domain.atlassian.net/browse/',
+        tmsPrefix: 'https://some.testrail.instance/path/suite/caseID-'
     },
     e2e: {
         setupNodeEvents: async function (on, config) {

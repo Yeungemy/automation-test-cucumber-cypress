@@ -1,7 +1,5 @@
-// Import statements
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
 
-// Step definitions
 Given('some precondition', () => {
     cy.log(`given`);
 });

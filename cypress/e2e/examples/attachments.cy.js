@@ -1,5 +1,6 @@
 describe('Allure attachments', () => {
     it('should be able to attach file to executable by content', () => {
+        cy.allure().step('attachment should be inside this step');
         cy.fixture('example').then((content) => {
             cy.allure().attachment(
                 'example',
@@ -10,6 +11,7 @@ describe('Allure attachments', () => {
     });
 
     it('should be able to attach file to test by content', () => {
+        cy.allure().step('attachment should be outside of this step');
         cy.fixture('example').then((content) => {
             cy.allure().testAttachment(
                 'example',

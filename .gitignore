@@ -1,11 +1,13 @@
 
 .DS_Store
+.vscode
 cypress/.DS_Store
 cypress/screenshots/
 cypress/videos/
-cypress/results/
+allure-results
+allure-report
 node_modules/
 allure-results
-.vscode
-allure-report/
 package-lock.json
+yarn.lock
+.vscode
