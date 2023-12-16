@@ -1,9 +1,28 @@
+// {
+//     "compilerOptions": {
+//         "allowJs": true,
+//         "types": ["cypress", "@shelex/cypress-allure-plugin/reporter"],
+//         "noEmit": true
+//     },
+//     "include": ["**/*.*"]
+// }
 {
     "compilerOptions": {
+        "esModuleInterop": true,
+        "target": "es5",
+        "lib": ["dom", "es2015"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "skipLibCheck": true,
+        "strict": true,
+        "types": ["cypress", "node"],
+        "jsx": "react",
+        "sourceMap": true,
+        "outDir": "./dist",
+        "resolveJsonModule": true,
         "allowJs": true,
-        "baseUrl": "../node_modules",
-        "types": ["cypress", "@shelex/cypress-allure-plugin/reporter"],
         "noEmit": true
     },
-    "include": ["**/*.*"]
+    "include": ["**/*.*"],
+    "exclude": ["node_modules"]
 }
