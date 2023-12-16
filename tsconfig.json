@@ -1,11 +1,3 @@
-// {
-//     "compilerOptions": {
-//         "allowJs": true,
-//         "types": ["cypress", "@shelex/cypress-allure-plugin/reporter"],
-//         "noEmit": true
-//     },
-//     "include": ["**/*.*"]
-// }
 {
     "compilerOptions": {
         "esModuleInterop": true,
