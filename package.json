@@ -15,6 +15,7 @@
         "posttest": "npm run allure:report && allure open allure-report"
     },
     "devDependencies": {
+        "@4tw/cypress-drag-drop": "^2.2.5",
         "@badeball/cypress-cucumber-preprocessor": "^19.2.0",
         "@cypress/webpack-preprocessor": "^6.0.0",
         "@shelex/cypress-allure-plugin": "^2.40.1",
@@ -26,8 +27,5 @@
     },
     "cypress-cucumber-preprocessor": {
         "nonGlobalStepDefinitions": true
-    },
-    "dependencies": {
-        "@4tw/cypress-drag-drop": "^2.2.5"
     }
 }

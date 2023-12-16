@@ -7,7 +7,14 @@
         "moduleResolution": "node",
         "skipLibCheck": true,
         "strict": true,
-        "types": ["cypress", "node"],
+        "types": [
+            "cypress",
+            "node",
+            "cypress-file-upload",
+            "@4tw/cypress-drag-drop", 
+            "@shelex/cypress-allure-plugin/reporter",
+            "global.d.ts"
+        ],
         "jsx": "react",
         "sourceMap": true,
         "outDir": "./dist",
@@ -15,6 +22,6 @@
         "allowJs": true,
         "noEmit": true
     },
-    "include": ["**/*.*"],
+    "include": ["**/*.*", "**/*.*.*"],
     "exclude": ["node_modules"]
 }
