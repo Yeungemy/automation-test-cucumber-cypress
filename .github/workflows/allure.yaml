@@ -1,67 +1,47 @@
-name: allure-report
-'on':
+on:
     push:
         branches:
-            - master
+            - main
+
 jobs:
     generate-report:
         runs-on: ubuntu-latest
+
         steps:
-            - uses: actions/checkout@v3
-            - name: Download Cypress
-              uses: bahmutov/npm-install@v1
-              with:
-                  install-command: npm i --force
-              env:
-                  CYPRESS_INSTALL_BINARY: 0
+            - name: Checkout Repository
+              uses: actions/checkout@v3
+
+            - name: Install Dependencies
+              run: npm install
 
             - name: Check Cypress cache
               run: |
                   npx cypress cache path
                   npx cypress cache list
 
-            - name: restore / cache the binary
-              id: cache-cypress
-              uses: actions/cache@v1
+            - name: Cache Cypress Binary
+              uses: actions/cache@v2
               with:
-                  path: ~/.cache/Cypress
-                  key: >-
-                      cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json')
-                      }}
+                  path: |
+                      ~/.cache/Cypress
+                  key: |
+                      cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
 
             - name: Install Cypress
-              run: |
-                  npx cypress install
-                  npx cypress cache list
+              run: npx cypress install
 
-            - name: Run Cypress
-              continue-on-error: true
+            - name: Run Cypress E2E
               run: npm run cy:run
               env:
-                  CYPRESS_SPLIT_SPEC_API_KEY: '${{ secrets.SPLIT_SPEC_API_KEY }}'
+                  CYPRESS_SPLIT_SPEC_API_KEY: ${{ secrets.SPLIT_SPEC_API_KEY }}
 
             - name: Run Cypress Cucumber
-              continue-on-error: true
-              if: always()
               run: npm run cy:cucumber:run
 
-            - name: Get Allure history
-              uses: actions/checkout@v3
-              if: always()
-              continue-on-error: true
-              with:
-                  ref: allure
-                  path: allure
-
             - name: Generate Allure Report
-              uses: simple-elf/allure-report-action@master
-              if: always()
-              with:
-                  allure_results: allure-results
-                  gh_pages: allure
+              run: npm run posttest
 
-            - name: Deploy report to Github Pages
-              if: always()
+            - name: Deploy report to GitHub Pages
               uses: peaceiris/actions-gh-pages@v3
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
