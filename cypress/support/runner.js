@@ -4,7 +4,7 @@ const cypressConfig = {
     video: true,
     browser: 'chrome',
     config: {
-        specPattern: 'cypress/e2e/ui/test/**/**',
+        specPattern: 'cypress/e2e/ui/test/**/**/**',
         excludeSpecPattern: '*.feature'
     },
     env: {
