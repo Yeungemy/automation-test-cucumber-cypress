@@ -10,7 +10,7 @@
 -   git
 -   dotenv
 
-## How to run:
+## How to run - please follow scripts in the package.json:
 
 -   clone this repo
 -   install dependencies: `npm install`
