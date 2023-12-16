@@ -11,3 +11,4 @@ allure-results
 package-lock.json
 yarn.lock
 .vscode
+.idea/

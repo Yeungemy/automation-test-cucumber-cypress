@@ -5,9 +5,9 @@
     "scripts": {
         "pretest": "rimraf allure-results allure-report cypress/videos cypress/screenshots && mkdir allure-results",
         "test": "node cypress/support/runner.js",
-        "cy:open": "npx cypress open --env allure=true --config specPattern=cypress/e2e/examples/** --browser chrome",
+        "cy:open": "npx cypress open --env allure=true --config specPattern=cypress/e2e/ui/test/**/** --browser chrome",
         "cy:cucumber:open": "npx cypress open --env allure=true --config specPattern=cypress/e2e/cucumber/*.feature,excludeSpecPattern=*.js --browser chrome",
-        "cy:run": "set DEBUG=allure-plugin* && npx cypress run --config specPattern=cypress/e2e/examples/* --env allure=true --browser chrome",
+        "cy:run": "set DEBUG=allure-plugin* && npx cypress run --config specPattern=cypress/e2e/ui/test/**/* --env allure=true --browser chrome",
         "cy:cucumber:run": "set DEBUG=allure-plugin* && npx cypress run --config specPattern=cypress/e2e/cucumber/*.feature,excludeSpecPattern=*.js --env allure=true --browser chrome",
         "allure:report": "allure generate allure-results --clean -o allure-report",
         "allure:clear": "rimraf allure-results allure-report cypress/videos cypress/screenshots",
