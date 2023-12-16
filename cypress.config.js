@@ -7,8 +7,9 @@ const {
 
 module.exports = defineConfig({
     env: {
-        issuePrefix: 'https://your.domain.atlassian.net/browse/',
-        tmsPrefix: 'https://some.testrail.instance/path/suite/caseID-'
+        url: 'https://testpages.eviltester.com/styled/index.html',
+        userName: 'test@demoqa.com',
+        password: 'test1234'
     },
     e2e: {
         setupNodeEvents: async function (on, config) {
