@@ -30,6 +30,9 @@ jobs:
             - name: Install Cypress
               run: npx cypress install
 
+            - name: Run Cypress Pretest
+              run: npm run pretest
+
             - name: Run Cypress E2E
               run: npm run cy:run
               env:
