@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - allure
+      - main
 
 jobs:
   generate-report:
