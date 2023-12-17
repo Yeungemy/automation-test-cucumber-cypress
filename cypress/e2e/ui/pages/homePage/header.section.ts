@@ -1,7 +1,7 @@
 class Header{
     get selectors(): any {
         return {
-
+            NAV_LINKS: ".nav-link"
         };
     }
 
