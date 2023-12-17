@@ -11,7 +11,7 @@
         "cy:cucumber:run": "set DEBUG=allure-plugin* && npx cypress run --config specPattern=cypress/e2e/cucumber/**/*.feature,excludeSpecPattern=*.spec.ts --env allure=true --browser chrome",
         "allure:report": "allure generate allure-results --clean -o allure-report",
         "allure:clear": "rimraf allure-results allure-report cypress/videos cypress/screenshots",
-        "allure:history": "npm run allure:report && move allure-report\\history allure-results\\history && rimraf allure-report",
+        "allure:history": "npm run allure:report && mv allure-report/history allure-results/history && rimraf allure-report",
         "posttest": "npm run allure:report && allure open allure-report"
     },
     "devDependencies": {
@@ -23,6 +23,7 @@
         "cypress-plugin-api": "^2.11.1",
         "eslint-plugin-chai-friendly": "^0.7.2",
         "eslint-plugin-cypress": "^2.15.1",
+        "ts-loader": "^9.5.1",
         "typescript": "^5.3.3"
     },
     "cypress-cucumber-preprocessor": {

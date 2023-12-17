@@ -5,7 +5,7 @@ import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-prepro
 
 export default defineConfig({
     env: {
-        url: 'https://testpages.eviltester.com/styled/index.html',
+        url: 'https://practicesoftwaretesting.com/#/',
         userName: 'test@demoqa.com',
         password: 'test1234'
     },
@@ -19,6 +19,13 @@ export default defineConfig({
                         resolve: { extensions: ['.ts', '.js'] },
                         module: {
                             rules: [
+                                {
+                                    test: /\.ts$/, // Add this line to handle TypeScript files
+                                    loader: 'ts-loader', // Use ts-loader for TypeScript files
+                                    options: {
+                                        transpileOnly: true // Add this option to speed up compilation
+                                    }
+                                },
                                 {
                                     test: /\.feature$/,
                                     use: [

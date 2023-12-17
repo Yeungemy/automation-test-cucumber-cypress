@@ -14,11 +14,6 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Check Cypress cache
-        run: |
-          npx cypress cache path
-          npx cypress cache list
-
       - name: Cache Cypress Binary
         uses: actions/cache@v2
         with:
@@ -38,11 +33,12 @@ jobs:
           npm run pretest
           npm run cy:run
           npm run cy:cucumber:run
-          npm run posttest
+          npm run allure:history
+          npm run allure:clear
 
       - name: Deploy Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: allure
-          publish_dir: allure-history
+          publish_dir: allure-results
