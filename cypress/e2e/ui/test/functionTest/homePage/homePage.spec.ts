@@ -7,7 +7,6 @@ describe('Home page', () => {
         cy.visit(Cypress.env('url')); 
     });
     
-
     it("should be able to see all seections", () => {
         cy.get(homePage.selectors.NAVBAR).should('be.visible');
         cy.get(homePage.selectors.LEAD_IMAG).should('be.visible');
