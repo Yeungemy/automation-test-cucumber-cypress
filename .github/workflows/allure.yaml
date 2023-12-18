@@ -32,8 +32,8 @@ jobs:
           restore-keys: |
             cypress-cache-v2-${{ runner.os }}-
 
-      - name: Transpile TypeScript (if needed)
-        run: npm run build  # Replace with your actual build script for TypeScript
+      - name: Transpile TypeScript
+        run: npm run build  # Define your build script in package.json
 
       - name: Run Cypress tests
         run: npm run cy:run
