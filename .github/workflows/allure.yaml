@@ -1,4 +1,4 @@
-name: CI
+name: allure-report
 
 on:
   push:
@@ -6,50 +6,59 @@ on:
       - main
 
 jobs:
-  test:
+  generate-report:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies
+        run: npm install
 
-    - name: Configure Git
-      run: |
-        git config --global user.name 'yeungemy'
-        git config --global user.email 'emyzheng80@gmail.com'
+      - name: Clean Allure and Cypress artifacts
+        run: npm run allure:clear
 
-    - name: Install dependencies
-      run: npm install
+      - name: Download Cypress
+        uses: bahmutov/npm-install@v1
+        with:
+          install-command: npm ci
 
-    - name: Run pretest script
-      run: npm run pretest
+      - name: Cache Cypress binary
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            cypress-cache-v2-${{ runner.os }}-
 
-    - name: Run test script
-      run: npm run test
+      - name: Run pretest
+        run: npm run pretest
 
-    - name: Install Webpack
-      run: npm install webpack --save-dev
+      - name: Run Cypress tests
+        run: |
+          npm run cy:run
+          npm run cy:cucumber:run
+        env:
+          CYPRESS_SPLIT_SPEC_API_KEY: '${{ secrets.SPLIT_SPEC_API_KEY }}'
 
-    - name: Generate Allure report
-      run: npm run allure:report
+      - name: Install Allure
+        run: |
+          npm install --save-dev allure
+          npm install -g allure-commandline
 
-    - name: Install Allure command-line tool
-      run: |
-        sudo apt-add-repository ppa:qameta/allure
-        sudo apt-get update
-        sudo apt-get install allure
+      - name: Generate Allure Report
+        run: npm run allure:report
 
-    - name: Commit and push Allure report
-      run: |
-        git add .
-        git commit -m "Add Allure report"
-        git push
+      - name: Move Allure Report history
+        run: npm run allure:history
+
+      - name: Deploy report to GitHub Pages
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add .
+          git commit -m "Update Allure report"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
