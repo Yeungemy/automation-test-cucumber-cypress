@@ -42,9 +42,12 @@ jobs:
           npm run cy:run
           npm run cy:cucumber:run
 
+      - name: Generate Allure Report
+        run: npm run allure:history
+
       - name: Deploy Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: allure
+          publish_branch: main
           publish_dir: allure-history
