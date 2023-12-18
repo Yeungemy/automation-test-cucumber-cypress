@@ -11,51 +11,36 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Ensure package-lock.json is available
+      - name: Install Dependencies
         run: npm ci
 
       - name: Download Cypress
         uses: bahmutov/npm-install@v1
         with:
-          install-command: npm i --force
-        env:
-          CYPRESS_INSTALL_BINARY: 0
+          install-command: npm ci
 
-      - name: Check Cypress cache
-        run: |
-          npx cypress cache path
-          npx cypress cache list
-
-      - name: Restore / cache the binary
-        id: cache-cypress
-        uses: actions/cache@v1
+      - name: Cache Cypress binary
+        uses: actions/cache@v2
         with:
           path: ~/.cache/Cypress
-          key: >-
-            cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
-
-      - name: Install Cypress
-        run: |
-          npx cypress install
-          npx cypress cache list
+          key: cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            cypress-cache-v2-${{ runner.os }}-
 
       - name: Run Cypress
-        continue-on-error: true
         run: npm run cy:run
         env:
           CYPRESS_SPLIT_SPEC_API_KEY: '${{ secrets.SPLIT_SPEC_API_KEY }}'
 
       - name: Run Cypress Cucumber
-        continue-on-error: true
-        if: always()
         run: npm run cy:cucumber:run
+        if: always()
 
       - name: Get Allure history
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         if: always()
-        continue-on-error: true
         with:
           ref: allure
           path: allure
@@ -67,10 +52,14 @@ jobs:
           allure_results: allure-results
           gh_pages: allure
 
-      - name: Deploy report to Github Pages
+      - name: Deploy report to GitHub Pages
         if: always()
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: allure
-          publish_dir: allure-history
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git checkout -b allure
+          git add .
+          git commit -m "Update Allure report"
+          git push origin allure
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
