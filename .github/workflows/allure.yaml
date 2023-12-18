@@ -51,12 +51,19 @@ jobs:
       - name: Move Allure Report history
         run: mv allure-report/history allure-results/history
 
-      - name: Deploy report to GitHub Pages
+       - name: Check for changes
+        id: check_changes
+        run: |
+          git diff --exit-code || echo "Changes found"
+        continue-on-error: true
+
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.result == 'Changes found'
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git add .
           git commit -m "Update Allure report"
-          git push 
+          git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
