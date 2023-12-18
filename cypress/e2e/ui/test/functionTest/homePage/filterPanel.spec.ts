@@ -14,6 +14,7 @@ describe("Filter Panel", () => {
     });
 
     it("should be able to select an option from a dropdown list", () => {
+        //verify sort 
         cy.selectOptionFromDropdown(filterPanel.selectors.SORT_FORM_SELECT, filterPanel.strings.SORT_FORM_SELECT_DESC_OPTION);
     });
 });

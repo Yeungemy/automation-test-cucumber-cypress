@@ -25,7 +25,7 @@ jobs:
           path: |
             ~/.cache/Cypress
           key: |
-            cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
+            cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install Cypress
         run: npx cypress install
