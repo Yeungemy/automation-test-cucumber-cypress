@@ -42,6 +42,9 @@ jobs:
         env:
           CYPRESS_SPLIT_SPEC_API_KEY: '${{ secrets.SPLIT_SPEC_API_KEY }}'
 
+      - name: Install Allure
+        run: npm install -g allure-commandline
+
       - name: Generate Allure Report
         run: npm run allure:report
 
