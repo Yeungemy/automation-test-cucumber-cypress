@@ -7,6 +7,7 @@ describe("Card", () => {
     });
 
     it("should be able to show a card properly", () => {
+        //verify a card has image, title, and price
         cardContainer.allCards.first().within(() => {
             card.cardImage.should("be.visible");
             card.cardTitle.should("be.visible");
