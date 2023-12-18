@@ -2,7 +2,7 @@ import { pagination } from "../../../pages/homePage/pagination.section";
 import * as PAGINATION from "../../../../data/Pagination";
 
 describe("Pangination", () => {
-    let activePageNo = 1;
+    const activePageNo = 1;
 
     beforeEach(() => {
         cy.visit(Cypress.env('url'));
@@ -35,5 +35,16 @@ describe("Pangination", () => {
 
         // verify the next page link is active
         pagination.getPageLinkByIndex(4).should('not.have.class', 'disabled');
+    });
+
+    it("Should be able to navigate to a new page", () => {
+        //verify current active page
+        pagination.activePageLink.should('have.length', 1).and('contain.text', activePageNo.toString());
+
+        //navigate to next page
+        pagination.getPageLinkByIndex(4).click();
+
+        //verify current active page
+        pagination.activePageLink.should('have.length', 1).and('not.contain.text', activePageNo.toString()).and('contain.text', (activePageNo + 1).toString());
     });
 });
