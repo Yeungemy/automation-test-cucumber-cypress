@@ -12,4 +12,8 @@ describe("Filter Panel", () => {
             cy.wrap($gridTitle).should("contain.text", Object.values(FILTER_PANEL.FILTER_PANEL)[index]);
         });
     });
+
+    it("should be able to select an option from a dropdown list", () => {
+        cy.selectOptionFromDropdown('.form-select', 'name,desc');
+    });
 });
