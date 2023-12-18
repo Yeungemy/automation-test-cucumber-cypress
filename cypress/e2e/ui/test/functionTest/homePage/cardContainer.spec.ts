@@ -8,6 +8,7 @@ describe("Cards Container", () => {
     });
 
     it("Should be able to see a container of cards", () => {
+        //verify the number of cards exists
         cardContainer.allCards.its('length').should("be.gte", numberOfCards)
     });
 });
