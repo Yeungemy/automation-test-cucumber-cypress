@@ -1,4 +1,4 @@
-export const Headers = {
+export const HEADERS = {
     HOME_TAB: "Home",
     CATEGORIES_TAB: "Categories",
     CONTACT_TAB: "Contact",

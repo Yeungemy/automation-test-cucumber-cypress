@@ -1,7 +1,9 @@
+import { homePage } from "./home.page";
+
 class CardContainer{
     get selectors(): any {
         return {
-
+            CARD: " .card"
         };
     }
 
@@ -9,6 +11,10 @@ class CardContainer{
         return {
 
         };
+    }
+
+    get allCards(): Cypress.Chainable<JQuery<HTMLElement>>{
+        return cy.get(homePage.selectors.CARD_CONTAINER).find(this.selectors.CARD);
     }
 }
 const cardContainer = new CardContainer();
