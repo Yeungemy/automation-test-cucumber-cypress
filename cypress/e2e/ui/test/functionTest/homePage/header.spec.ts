@@ -3,7 +3,6 @@ import * as TABS from "../../../../data/Tabs";
 
 describe("Page Header Bar", () => {
     beforeEach(() => {
-        //open the home page
         cy.visit(Cypress.env('url')); 
     });
 
