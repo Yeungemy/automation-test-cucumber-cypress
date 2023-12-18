@@ -32,11 +32,13 @@ jobs:
           restore-keys: |
             cypress-cache-v2-${{ runner.os }}-
 
-      - name: Transpile TypeScript
-        run: npm run build  # Define your build script in package.json
+      - name: Run pretest
+        run: npm run pretest
 
       - name: Run Cypress tests
-        run: npm run cy:run
+        run: |
+          npm run cy:run
+          npm run cy:cucumber:run
         env:
           CYPRESS_SPLIT_SPEC_API_KEY: '${{ secrets.SPLIT_SPEC_API_KEY }}'
 
