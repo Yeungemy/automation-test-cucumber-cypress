@@ -1,44 +1,52 @@
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 
 jobs:
-  generate-report:
-    runs-on: ubuntu-latest
+    generate-report:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v3
 
-      - name: Install Dependencies
-        run: npm install
+            - name: Install Dependencies
+              run: npm install
 
-      - name: Cache Cypress Binary
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cache/Cypress
-          key: |
-            cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
+            - name: Check Cypress cache
+              run: |
+                  npx cypress cache path
+                  npx cypress cache list
 
-      - name: Install Cypress
-        run: npx cypress install
+            - name: Cache Cypress Binary
+              uses: actions/cache@v2
+              with:
+                  path: |
+                      ~/.cache/Cypress
+                  key: |
+                      cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
 
-      - name: Install Allure
-        run: npm install -g allure-commandline
+            - name: Install Cypress
+              run: npx cypress install
 
-      - name: Run Cypress Tests
-        run: |
-          npm run pretest
-          npm run cy:run
-          npm run cy:cucumber:run
-          npm run allure:history
-          npm run allure:clear
+            - name: Run Cypress Pretest
+              run: npm run pretest
 
-      - name: Deploy Report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: main
-          publish_dir: allure-results
+            - name: Run Cypress E2E
+              run: npm run cy:run
+              env:
+                  CYPRESS_SPLIT_SPEC_API_KEY: ${{ secrets.SPLIT_SPEC_API_KEY }}
+
+            - name: Run Cypress Cucumber
+              run: npm run cy:cucumber:run
+
+            - name: Generate Allure Report
+              run: npm run posttest
+
+            - name: Deploy report to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_branch: allure
+                  publish_dir: allure-history

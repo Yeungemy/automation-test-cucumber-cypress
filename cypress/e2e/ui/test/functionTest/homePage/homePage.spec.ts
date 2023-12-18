@@ -7,6 +7,7 @@ describe('Home page', () => {
     });
     
     it("should be able to see all seections", () => {
+        //verify all section of the home page are shown properly
         homePage.navbar.should('be.visible');
         homePage.leadImage.should('be.visible');
         homePage.filterPanel.should('be.visible');
@@ -16,6 +17,7 @@ describe('Home page', () => {
     });  
 
     it("should be able to show the tile of the home page", () => {
+        //verify the page title
         cy.title().should("contain", header.strings.PAGE_TITLE);
     }); 
 });
