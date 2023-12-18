@@ -33,7 +33,8 @@ jobs:
       - name: Install Allure
         run: |
           npm install -g allure-commandline
-          echo "::add-path::$HOME/.npm-global/bin"
+          echo "export PATH=$PATH:$HOME/.npm-global/bin" >> $HOME/.bashrc
+          source $HOME/.bashrc
 
       - name: Run Cypress Tests
         run: |
