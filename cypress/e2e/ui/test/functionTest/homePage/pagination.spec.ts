@@ -32,5 +32,8 @@ describe("Pangination", () => {
 
         // verify the previous page link is inactive
         pagination.getPageLinkByIndex().should('have.class', 'disabled');
+
+        // verify the next page link is active
+        pagination.getPageLinkByIndex(4).should('not.have.class', 'disabled');
     });
 });
