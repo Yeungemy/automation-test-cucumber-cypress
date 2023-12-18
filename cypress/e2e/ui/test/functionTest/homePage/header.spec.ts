@@ -7,7 +7,6 @@ describe("Page Header Bar", () => {
     });
 
     it("should be able to see all tabs", () => {
-        //verify all labels of tabs are displaying properly
         cy.get(header.selectors.NAV_LINKS).each(($navLink, index) => {
             cy.wrap($navLink).should("contain.text", (Object.values(TABS.TABS))[index]);
         });
