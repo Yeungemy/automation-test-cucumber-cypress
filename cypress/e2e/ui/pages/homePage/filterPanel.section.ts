@@ -1,13 +1,14 @@
 class FilterPanel{
     get selectors(): any {
         return {
-            GRID_TITLE: ".grid-title"
+            GRID_TITLE: ".grid-title",
+            SORT_FORM_SELECT: ".form-select"
         };
     }
 
     get strings(): any {
         return {
-
+            SORT_FORM_SELECT_DESC_OPTION: "name,desc"
         };
     }
 
