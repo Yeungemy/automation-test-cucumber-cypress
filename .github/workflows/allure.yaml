@@ -36,8 +36,17 @@ jobs:
     - name: Run test script
       run: npm run test
 
+    - name: Install Webpack
+      run: npm install webpack --save-dev
+
     - name: Generate Allure report
       run: npm run allure:report
+
+    - name: Install Allure command-line tool
+      run: |
+        sudo apt-add-repository ppa:qameta/allure
+        sudo apt-get update
+        sudo apt-get install allure
 
     - name: Commit and push Allure report
       run: |
