@@ -8,7 +8,6 @@ describe("Page Header Bar", () => {
 
     it("should be able to see all tabs", () => {
         cy.get(header.selectors.NAV_LINKS).each(($navLink, index) => {
-            console.log('test');
             cy.wrap($navLink).should("contain.text", (Object.values(TABS.TABS))[index]);
         });
     }); 
