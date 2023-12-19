@@ -6,20 +6,12 @@ declare namespace Cypress {
         getElementByIndex(selector: string, targetIndex: number): Chainable<JQuery<HTMLElement>>;
         selectOptionFromDropdown(dropdownSelector: string, option: string): void;
         selectHandleValue(handleSelector: string, value: number): void;
+        moveSliderHandle(selector: string, targetValue: number, direction: string, steps: number): void;
     }
 }
 
 Cypress.Commands.add('getElementByIndex', (selector: string, targetIndex: number = 0): Cypress.Chainable<JQuery<HTMLElement>> => {
     return cy.get(`${selector}:nth-child(${targetIndex + 1})`);
-});
-
-Cypress.Commands.add('customCommand', (one: string, two: string, ...args: string[]): void => {
-    cy.log('this is a message from cy custom command');
-    cy.log(one);
-    cy.log(two);
-    args.forEach((arg) => {
-        cy.log(arg);
-    });
 });
 
 Cypress.Commands.add('selectOptionFromDropdown', (dropdownSelector: string, option: string): void => {
@@ -30,3 +22,14 @@ Cypress.Commands.add('selectOptionFromDropdown', (dropdownSelector: string, opti
 Cypress.Commands.add('selectHandleValue', (handleSelector: string, value: number): void => {
     cy.get(handleSelector).invoke('val', value).trigger('input');
 });
+
+Cypress.Commands.add('moveSliderHandle', (selector: string, targetValue: number, direction: string = 'right', step: number = 1): void => {
+    const steps: number = direction === 'right' ? Math.floor(targetValue / step) : Math.ceil(targetValue / step);
+  
+    if (direction === 'right') {
+      cy.get(selector).type(`{rightarrow}`.repeat(steps), { delay: 50, force: true });
+    } else if (direction === 'left') {
+      cy.get(selector).type(`{leftarrow}`.repeat(steps), { delay: 50, force: true });
+    }
+  });
+  
