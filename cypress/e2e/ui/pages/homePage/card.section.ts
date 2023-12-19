@@ -2,7 +2,7 @@ class Card{
     get selectors(): any {
         return {
             CARD_IMAGE: ".card-img-top",
-            CARD_TITLE: ".card-title",
+            CARD_TITLE: '[data-test="product-name"]',
             CARD_PRICE: ".card-footer .float-end"
         };
     }

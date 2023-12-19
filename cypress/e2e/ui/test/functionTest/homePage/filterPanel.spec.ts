@@ -22,7 +22,7 @@ describe("Filter Panel", () => {
         cy.selectOptionFromDropdown(filterPanel.selectors.SORT_FORM_SELECT, filterPanel.strings.SORT_FORM_SELECT_DESC_OPTION);
     });
 
-    it("should be able to filter by price range", () => {
+    it("should be able to move slider handle and filter tools within the chosen price range", () => {
         const STEP_SIZE = 2;
         const MIN_VALUE = 20;
         const MAX_VALUE = 50;
@@ -44,4 +44,29 @@ describe("Filter Panel", () => {
         });
     });
     
+    it("should be able to search tools", () => {
+        let toolSearchString = chance.string();
+        
+        //fill input string
+        cy.fillInputField(filterPanel.selectors.SEARCH_INPUT_FIELD, toolSearchString);
+
+        //clear input string
+        filterPanel.clearSearchInputField();
+
+        //fill input string
+        filterPanel.search(toolSearchString);
+
+        //verify there is no tools found
+        cy.get(filterPanel.selectors.SEARCH_WITH_NO_RESULTS).should('be.visible');
+
+        toolSearchString = 'Pliers';
+
+        //search
+        filterPanel.search(toolSearchString);
+
+        //verify test results
+        cy.get(card.selectors.CARD_TITLE).each($cardName => {
+            cy.wrap($cardName).should('contain.text', toolSearchString);
+        });
+    });
 });

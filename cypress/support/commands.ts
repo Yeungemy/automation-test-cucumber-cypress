@@ -7,11 +7,21 @@ declare namespace Cypress {
         selectOptionFromDropdown(dropdownSelector: string, option: string): void;
         selectHandleValue(handleSelector: string, value: number): void;
         moveSliderHandle(selector: string, targetValue: number, direction: string, steps: number): void;
+        getElementByTestId(testId: string): Chainable<Element>;
+        fillInputField(selector: string, content: string): void
     }
 }
 
+Cypress.Commands.add('getElementByTestId', (testId: string): any => {
+    return cy.get(`[data-test="${testId}"]`);
+});
+  
 Cypress.Commands.add('getElementByIndex', (selector: string, targetIndex: number = 0): Cypress.Chainable<JQuery<HTMLElement>> => {
     return cy.get(`${selector}:nth-child(${targetIndex + 1})`);
+});
+
+Cypress.Commands.add('fillInputField', (selector: string, content: string): void => {
+    cy.get(selector).click().type('{selectall}').clear().type(content).should('contain.value', content);
 });
 
 Cypress.Commands.add('selectOptionFromDropdown', (dropdownSelector: string, option: string): void => {
