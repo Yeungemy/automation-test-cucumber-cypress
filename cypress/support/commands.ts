@@ -5,6 +5,7 @@ declare namespace Cypress {
         customCommand(one: string, two: string, ...args: string[]): Chainable<void>;
         getElementByIndex(selector: string, targetIndex: number): Chainable<JQuery<HTMLElement>>;
         selectOptionFromDropdown(dropdownSelector: string, option: string): void;
+        selectHandleValue(handleSelector: string, value: number): void;
     }
 }
 
@@ -24,4 +25,8 @@ Cypress.Commands.add('customCommand', (one: string, two: string, ...args: string
 Cypress.Commands.add('selectOptionFromDropdown', (dropdownSelector: string, option: string): void => {
     cy.get(dropdownSelector).select(option);
     cy.get(dropdownSelector).should('have.value', option);
+});
+
+Cypress.Commands.add('selectHandleValue', (handleSelector: string, value: number): void => {
+    cy.get(handleSelector).invoke('val', value).trigger('input');
 });

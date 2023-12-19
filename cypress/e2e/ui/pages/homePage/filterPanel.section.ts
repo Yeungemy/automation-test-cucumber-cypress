@@ -2,7 +2,9 @@ class FilterPanel{
     get selectors(): any {
         return {
             GRID_TITLE: ".grid-title",
-            SORT_FORM_SELECT: ".form-select"
+            SORT_FORM_SELECT: ".form-select",
+            SLIDER_POINTER_MIN: ".ngx-slider-pointer-min",
+            SLIDER_POINTER_MAX: ".ngx-slider-pointer-max"
         };
     }
 

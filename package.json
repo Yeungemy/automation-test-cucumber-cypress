@@ -18,6 +18,8 @@
         "@badeball/cypress-cucumber-preprocessor": "^19.2.0",
         "@cypress/webpack-preprocessor": "^6.0.0",
         "@shelex/cypress-allure-plugin": "^2.40.1",
+        "@types/chance": "^1.1.6",
+        "chance": "^1.1.11",
         "cypress": "12.14.0",
         "cypress-plugin-api": "^2.11.1",
         "eslint-plugin-chai-friendly": "^0.7.2",

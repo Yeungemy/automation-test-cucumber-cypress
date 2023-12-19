@@ -1,50 +1,19 @@
-on:
-  push:
-    branches:
-      - main
+# Cypress Cucumber Allure
 
-jobs:
-  generate-report:
-    runs-on: ubuntu-latest
+## Languages and Frameworks
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+-   cypress
+-   typescript
+-   allure report
+-   cucumber
+-   prettier
+-   git
+-   dotenv
+-   chance: npm i --save-dev @types/chance
 
-      - name: Install Dependencies
-        run: npm install
+## How to run:
 
-      - name: Check Cypress cache
-        run: |
-          npx cypress cache path
-          npx cypress cache list
-
-      - name: Cache Cypress Binary
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cache/Cypress
-          key: |
-            cypress-cache-v2-${{ runner.os }}-${{ hashFiles('**/package.json') }}
-
-      - name: Install Cypress
-        run: npx cypress install
-
-      - name: Install Allure
-        run: |
-          npm install -g allure-commandline
-          echo "$HOME/.npm-global/bin" >> $GITHUB_PATH
-
-      - name: Run Cypress Tests
-        run: |
-          npm run pretest
-          npm run cy:run
-          npm run cy:cucumber:run
-          npm run posttest
-
-      - name: Deploy Report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: allure
-          publish_dir: allure-history
+-   clone this repo
+-   install dependencies: `npm install`
+-   run tests: `npm run e2e:run`
+-   open report: `npm run posttest`
