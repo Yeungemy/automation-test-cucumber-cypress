@@ -17,7 +17,7 @@ jobs:
         run: npm install
 
       - name: Clean Allure and Cypress artifacts
-        run: npm run allure:clear
+        run: npm run pretest
 
       - name: Download Cypress
         uses: bahmutov/npm-install@v1
@@ -32,9 +32,6 @@ jobs:
           restore-keys: |
             cypress-cache-v2-${{ runner.os }}-
 
-      - name: Run pretest
-        run: npm run pretest
-
       - name: Run Cypress tests
         run: |
           npm run cy:run
@@ -43,9 +40,7 @@ jobs:
           CYPRESS_SPLIT_SPEC_API_KEY: '${{ secrets.SPLIT_SPEC_API_KEY }}'
 
       - name: Install Allure
-        run: |
-          npm install --save-dev allure
-          npm install -g allure-commandline
+        run: npm install -g allure-commandline
 
       - name: Generate Allure Report
         run: npm run allure:report
@@ -53,14 +48,10 @@ jobs:
       - name: Move Allure Report history
         run: npm run allure:history
 
-      - name: Configure Git
+      - name: Deploy report to GitHub Pages
         run: |
-          git config --local user.email "emyzheng80@gmail.com"
+          git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-        shell: bash
-
-      - name: Commit and push changes
-        run: |
           git add .
           git commit -m "Update Allure report"
           git push origin main
