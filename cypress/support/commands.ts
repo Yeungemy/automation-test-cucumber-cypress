@@ -27,6 +27,7 @@ Cypress.Commands.add('fillInputField', (selector: string, content: string): void
 Cypress.Commands.add('selectOptionFromDropdown', (dropdownSelector: string, option: string): void => {
     cy.get(dropdownSelector).select(option);
     cy.get(dropdownSelector).should('have.value', option);
+    cy.wait(1000);
 });
 
 Cypress.Commands.add('selectHandleValue', (handleSelector: string, value: number): void => {
