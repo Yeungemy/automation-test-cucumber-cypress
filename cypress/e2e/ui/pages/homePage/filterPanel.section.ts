@@ -14,8 +14,10 @@ class FilterPanel{
 
     get strings(): any {
         return {
-            SORT_FORM_SELECT_DESC_OPTION: "name,desc",
-            SORT_FORM_SELECT_ASC_OPTION: "name,asc"
+            SORT_BY_NAME_DESC_OPTION: "name,desc",
+            SORT_BY_NAME_ASC_OPTION: "name,asc",
+            SORT_BY_PRICE_DESC_OPTION: "price,desc",
+            SORT_BY_PRICE_ASC_OPTION: "price,asc"
         };
     }
 

@@ -41,18 +41,38 @@ class HomePage {
     return cy.get(this.selectors.FILTER_PANEL);
   }
 
-  getAllToolsOfCurrentPage(): Cypress.Chainable<string[]> {
-    const tools: string[] = [];
+  getProductMap(): Cypress.Chainable<{ [key: string]: number }> {
+    const productMap: { [key: string]: number } = {};
 
-    return cy.get(card.selectors.CARD_TITLE).each($cardTitle => {
-      cy.wrap($cardTitle).invoke('text').then((text) => {
-        tools.push(text.toString().trim());
+    return cy.get(card.selectors.CARD_TITLE).each(($title, index) => {
+      const productName = $title.text().trim();
+
+      cy.get(card.selectors.CARD).eq(index).find('.text-muted [data-test="product-price"]').then(($price) => {
+        const productPrice = parseFloat($price.text().replace('$', '').trim());
+
+        productMap[productName] = productPrice;
       });
-    }).then(() => tools);
+    }).then(() => productMap);
   }
 
-  getAllTools(): Cypress.Chainable<string[]> {
-    const tools: string[] = [];
+  getProductListOfCurrentPage(): Cypress.Chainable<{ name: string; price: number }[]> {
+    const products: { name: string; price: number }[] = [];
+
+    return cy.get(card.selectors.CARD_TITLE).each(($cardTitle, index) => {
+      cy.wrap($cardTitle).invoke('text').then((text) => {
+        const productName = text.toString().trim();
+
+        cy.get(card.selectors.CARD_PRICE).eq(index).then(($price) => {
+          const productPrice = parseFloat($price.text().replace('$', '').trim());
+
+          products.push({ name: productName, price: productPrice });
+        });
+      });
+    }).then(() => products);
+  }
+
+  getProductList(): Cypress.Chainable<{ name: string; price: number }[]> {
+    const products: { name: string; price: number }[] = [];
 
     // Get the total number of pages
     return cy.get(pagination.selectors.PAGE_LINK).its('length').then((totalPages) => {
@@ -63,17 +83,17 @@ class HomePage {
       for (let index = 1; index <= totalPages && index <= 3; index++) {
         fetchPagePromises.push(
           cy.get(pagination.selectors.PAGE_LINK).eq(index).click().wait(1000).then(() => {
-            // Get tools of the current page using getAllToolsOfCurrentPage
-            return this.getAllToolsOfCurrentPage().then((toolsOfCurrentPage) => {
-              // Add tools of the current page to the main tools array
-              tools.push(...toolsOfCurrentPage);
+            // Get products of the current page using getProductListOfCurrentPage
+            return this.getProductListOfCurrentPage().then((productsOfCurrentPage) => {
+              // Add products of the current page to the main products array
+              products.push(...productsOfCurrentPage);
             });
           })
         );
       }
 
-      // Resolve with the combined tools array after fetching tools from all pages
-      return Promise.all(fetchPagePromises).then(() => tools);
+      // Resolve with the combined products array after fetching products from all pages
+      return Promise.all(fetchPagePromises).then(() => products);
     });
   }
 }
