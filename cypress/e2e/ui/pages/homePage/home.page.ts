@@ -47,7 +47,7 @@ class HomePage {
     return cy.get(card.selectors.CARD_TITLE).each(($title, index) => {
       const productName = $title.text().trim();
 
-      cy.get(card.selectors.CARD).eq(index).find('.text-muted [data-test="product-price"]').then(($price) => {
+      cy.get(card.selectors.CARD_PRICE).eq(index).then(($price) => {
         const productPrice = parseFloat($price.text().replace('$', '').trim());
 
         productMap[productName] = productPrice;
@@ -56,19 +56,18 @@ class HomePage {
   }
 
   getProductListOfCurrentPage(): Cypress.Chainable<{ name: string; price: number }[]> {
-    const products: { name: string; price: number }[] = [];
+    // Use getProductMap internally to build the product list
+    return this.getProductMap().then((productMap) => {
+      const products: { name: string; price: number }[] = [];
 
-    return cy.get(card.selectors.CARD_TITLE).each(($cardTitle, index) => {
-      cy.wrap($cardTitle).invoke('text').then((text) => {
-        const productName = text.toString().trim();
-
-        cy.get(card.selectors.CARD_PRICE).eq(index).then(($price) => {
-          const productPrice = parseFloat($price.text().replace('$', '').trim());
-
-          products.push({ name: productName, price: productPrice });
-        });
+      // Iterate through each product in the map and add it to the list
+      Object.keys(productMap).forEach((productName) => {
+        const productPrice = productMap[productName];
+        products.push({ name: productName, price: productPrice });
       });
-    }).then(() => products);
+
+      return products;
+    });
   }
 
   getProductList(): Cypress.Chainable<{ name: string; price: number }[]> {
