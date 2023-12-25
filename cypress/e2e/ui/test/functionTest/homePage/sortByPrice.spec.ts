@@ -5,6 +5,9 @@ describe("Sort by Price of Tools on Filter Panel", () => {
   let actualProducts: { name: string; price: number }[];
   let sortedProducts: { name: string; price: number }[];
   let expectProducts: { name: string; price: number }[];
+  const numOfTools = 9;
+  const  DESC_SORT_ORDER = "desc";
+  const  ASC_SORT_ORDER = "asc";
 
   const sortAndVerify = (sortedProducts: { name: string; price: number }[], sortOption: string, sortOrder: "asc" | "desc", numberOfItems: number) => {
     // Sort products based on the provided order
@@ -39,10 +42,10 @@ describe("Sort by Price of Tools on Filter Panel", () => {
   });
 
   it("should sort tools by price in descending order", () => {
-    sortAndVerify(sortedProducts, filterPanel.strings.SORT_BY_PRICE_DESC_OPTION, "desc", 9);
+    sortAndVerify(sortedProducts, filterPanel.strings.SORT_BY_PRICE_DESC_OPTION, DESC_SORT_ORDER, numOfTools);
   });
 
   it("should sort tools by price in ascending order", () => {
-    sortAndVerify(sortedProducts, filterPanel.strings.SORT_BY_PRICE_ASC_OPTION, "asc", 9);
+    sortAndVerify(sortedProducts, filterPanel.strings.SORT_BY_PRICE_ASC_OPTION, ASC_SORT_ORDER, numOfTools);
   });
 });
