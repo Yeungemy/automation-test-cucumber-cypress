@@ -4,6 +4,7 @@
 import '@shelex/cypress-allure-plugin';
 import 'cypress-plugin-api';
 import './commands';
+import './toolbox';
 
 if (Cypress.spec.name.includes('test.duplicate.name')) {
     Cypress.Allure.reporter.getInterface().defineHistoryId((title) => {

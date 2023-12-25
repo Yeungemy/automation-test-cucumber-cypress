@@ -3,7 +3,9 @@ import { homePage } from "./home.page";
 class CardContainer{
     get selectors(): any {
         return {
-            CARD: " .card"
+            CARD: 'a.card',
+            FILTER_COMPLETED_STATUS: '[data-test="filter_completed"]',
+            NO_RESULTS_FILTERED: '[data-test="no-results"]'
         };
     }
 
