@@ -13,13 +13,10 @@ describe("Moving slider handle on Filter Panel", () => {
         const MAX_VALUE = 50;
     
         // Move the first handle to a specific position
-        cy.moveSliderHandle(filterPanel.selectors.SLIDER_POINTER_MIN, MIN_VALUE, 'right', STEP_SIZE);
-        cy.get(filterPanel.selectors.SLIDER_POINTER_MIN).should('have.attr', 'aria-valuenow', (MIN_VALUE + 1).toString());
+        cy.moveSliderHandle(filterPanel.selectors.SLIDER_POINTER_MIN, 'aria-valuenow', MIN_VALUE, 'right', STEP_SIZE, 8000);
     
         // Move the second handle to a specific position
-        cy.moveSliderHandle(filterPanel.selectors.SLIDER_POINTER_MAX, MAX_VALUE, 'left', STEP_SIZE);
-        cy.get(filterPanel.selectors.SLIDER_POINTER_MAX).should('have.attr', 'aria-valuenow', MAX_VALUE.toString());
-        cy.wait(8000); //TODO: avoid hard wait
+        cy.moveSliderHandle(filterPanel.selectors.SLIDER_POINTER_MAX, 'aria-valuenow', MAX_VALUE, 'left', STEP_SIZE, 8000);
 
         //verify only show cards with its price within the range slided
         cy.get(card.selectors.CARD_PRICE).each($price => {

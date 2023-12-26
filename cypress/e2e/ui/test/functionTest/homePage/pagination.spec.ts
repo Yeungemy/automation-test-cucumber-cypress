@@ -46,25 +46,25 @@ describe("Pangination", () => {
         indexOfPaginationIcon = 4; 
 
         //verify current active page
-        pagination.activePageLink.should('have.length', 1).and('contain.text', activePageNo.toString());
+        pagination.activePageLink.should('have.length', activePageNo).and('contain.text', activePageNo.toString());
 
         //navigate to next page
         pagination.getPageLinkByIndex(indexOfPaginationIcon).click();
 
         //verify current active page
-        pagination.activePageLink.should('have.length', 1).and('not.contain.text', activePageNo.toString()).and('contain.text', (activePageNo + 1).toString());
+        pagination.activePageLink.should('have.length', activePageNo).and('not.contain.text', activePageNo.toString()).and('contain.text', (activePageNo + 1).toString());
     });
 
     it("Should be able to navigate to a new page by clicking number icon", () => {
         indexOfPaginationIcon = 3; 
 
         //verify current active page
-        pagination.activePageLink.should('have.length', 1).and('contain.text', activePageNo.toString());
+        pagination.activePageLink.should('have.length', activePageNo).and('contain.text', activePageNo.toString());
 
         //navigate to next page
         pagination.getPageLinkByIndex(indexOfPaginationIcon).click();
 
         //verify current active page
-        pagination.activePageLink.should('have.length', 1).and('not.contain.text', activePageNo.toString()).and('contain.text', indexOfPaginationIcon.toString());
+        pagination.activePageLink.should('have.length', activePageNo).and('not.contain.text', activePageNo.toString()).and('contain.text', indexOfPaginationIcon.toString());
     });
 });

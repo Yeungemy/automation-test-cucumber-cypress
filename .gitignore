@@ -4,8 +4,6 @@
 cypress/.DS_Store
 cypress/screenshots/
 cypress/videos/
-allure-results
-allure-report
 node_modules/
 allure-results
 package-lock.json

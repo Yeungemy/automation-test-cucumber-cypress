@@ -6,7 +6,7 @@ declare namespace Cypress {
         getElementByIndex(selector: string, targetIndex: number): Cypress.Chainable<JQuery<HTMLElement>>;
         selectOptionFromDropdown(dropdownSelector: string, option: string): void;
         selectHandleValue(handleSelector: string, value: number): void;
-        moveSliderHandle(selector: string, targetValue: number, direction: string, steps: number): void;
+        moveSliderHandle(selector: string, valueAttr: string, targetValue: number, direction: string, steps: number, waitTime: number): void;
         getElementByTestId(testId: string): Chainable<Element>;
         fillInputField(selector: string, content: string): void;
         waitToBeVisible(selector: string, timeout: number): Cypress.Chainable<JQuery<HTMLElement>>;
@@ -36,14 +36,19 @@ Cypress.Commands.add('selectHandleValue', (handleSelector: string, value: number
     cy.get(handleSelector).invoke('val', value).trigger('input');
 });
 
-Cypress.Commands.add('moveSliderHandle', (selector: string, targetValue: number, direction: string = 'right', step: number = 1): void => {
+Cypress.Commands.add('moveSliderHandle', (selector: string, valueAttr: string, targetValue: number, direction: string = 'right', step: number = 1, timeout: number = 8000): void => {
     const steps: number = direction === 'right' ? Math.floor(targetValue / step) : Math.ceil(targetValue / step);
+    let attrValue = 0;
 
     if (direction === 'right') {
+        attrValue = targetValue + 1;
         cy.get(selector).type(`{rightarrow}`.repeat(steps), { delay: 50, force: true });
     } else if (direction === 'left') {
+        attrValue = targetValue;
         cy.get(selector).type(`{leftarrow}`.repeat(steps), { delay: 50, force: true });
     }
+
+    cy.get(selector, {timeout}).should('have.attr', valueAttr, attrValue.toString());
 });
 
 Cypress.Commands.add('waitToBeVisible', (selector: string, timeout: number = 5000): Cypress.Chainable<JQuery<HTMLElement>> => {

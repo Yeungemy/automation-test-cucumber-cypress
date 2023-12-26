@@ -1,6 +1,7 @@
 import { filterPanel } from "../../../pages/homePage/filterPanel.section";
 import { card } from "../../../pages/homePage/card.section";
 import * as toolbox from "../../../../../support/toolbox";
+import { cardContainer } from "../../../pages/homePage/carContainer.section";
 
 
 describe("Search on Filter Panel", () => {
@@ -25,7 +26,7 @@ describe("Search on Filter Panel", () => {
         filterPanel.search(toolSearchString);
 
         //verify there is no tools found
-        cy.get(filterPanel.selectors.SEARCH_WITH_NO_RESULTS).should('be.visible');
+        cy.get(cardContainer.selectors.NO_RESULTS_FILTERED).should('be.visible');
 
         toolSearchString = 'Pliers';
 
