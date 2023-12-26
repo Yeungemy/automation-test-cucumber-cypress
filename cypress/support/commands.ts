@@ -48,6 +48,8 @@ Cypress.Commands.add('moveSliderHandle', (selector: string, valueAttr: string, t
         cy.get(selector).type(`{leftarrow}`.repeat(steps), { delay: 50, force: true });
     }
 
+    cy.wait(timeout);
+
     cy.get(selector, {timeout}).should('have.attr', valueAttr, attrValue.toString());
 });
 
