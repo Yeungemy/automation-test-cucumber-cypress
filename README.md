@@ -6,7 +6,7 @@
 -   typescript
 -   allure report
 -   cucumber
--   prettier
+-   prettier: npm install @badeball/cypress-cucumber-preprocessor
 -   git
 -   dotenv
 -   chance: npm i --save-dev @types/chance
