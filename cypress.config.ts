@@ -3,6 +3,7 @@ import allureWriter from '@shelex/cypress-allure-plugin/writer';
 import webpack from '@cypress/webpack-preprocessor';
 import { addCucumberPreprocessorPlugin } from '@badeball/cypress-cucumber-preprocessor';
 
+
 async function setupNodeEvents(on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions) {
   // This is required for the preprocessor to generate JSON reports after each run and more
   await addCucumberPreprocessorPlugin(on, config);

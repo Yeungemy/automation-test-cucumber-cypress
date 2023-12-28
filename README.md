@@ -10,6 +10,7 @@
 -   git
 -   dotenv
 -   chance: npm i --save-dev @types/chance
+-   browserify-preprocessor: npm i @cypress/browserify-preprocessor
 
 ## How to run:
 
